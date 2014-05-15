@@ -3,6 +3,8 @@ Edge of the Empire dice roller
 
 A Python utility used for rolling special dice used in the Star Wars: Edge of the Empire roleplaying game (and variants). Also has support for arbitrarily sided dice.
 
+Credits go out to https://github.com/DoWhileGeek for inspiring me to create this.
+
 Usage
 -----
 
