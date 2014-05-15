@@ -1,51 +1,51 @@
 Success = {
-	"success": 1
+    "success": 1
 }
 
 Advantage = {
-	"advantage": 1
+    "advantage": 1
 }
 
 Triumph = {
-	"success": 1,
-	"triumph": 1
+    "success": 1,
+    "triumph": 1
 }
 
 Failure = {
-	"success": -1
+    "success": -1
 }
 
 Threat = {
-	"advantage": -1
+    "advantage": -1
 }
 
 Despair = {
-	"success": -1,
-	"despair": 1
+    "success": -1,
+    "despair": 1
 }
 
 Dark = {
-	"dark": 1
+    "dark": 1
 }
 
 Light = {
-	"light": 1
+    "light": 1
 }
 
 Blank = {
 }
 
 die_options = {
-	"b": (
-		(Blank,),
+    "b": (
+        (Blank,),
         (Blank,),
         (Success,),
         (Advantage,),
         (Advantage, Advantage,),
         (Advantage, Success,)
     ),
-	"a": (
-		(Blank,),
+    "a": (
+        (Blank,),
         (Advantage, Advantage,),
         (Success,),
         (Advantage,),
@@ -54,8 +54,8 @@ die_options = {
         (Advantage,),
         (Success,)
     ),
-	"p": (
-		(Blank,),
+    "p": (
+        (Blank,),
         (Success,),
         (Success,),
         (Success, Success,),
@@ -68,16 +68,16 @@ die_options = {
         (Advantage, Advantage,),
         (Triumph,)
     ),
-	"s": (
-		(Blank,),
+    "s": (
+        (Blank,),
         (Blank,),
         (Failure,),
         (Failure,),
         (Threat,),
         (Threat,)
     ),
-	"d": (
-		(Blank,),
+    "d": (
+        (Blank,),
         (Threat,),
         (Threat, Threat,),
         (Threat,),
@@ -86,8 +86,8 @@ die_options = {
         (Threat, Threat,),
         (Failure, Threat,)
     ),
-	"c": (
-		(Blank,),
+    "c": (
+        (Blank,),
         (Failure,),
         (Failure,),
         (Failure, Failure,),
@@ -100,8 +100,8 @@ die_options = {
         (Threat, Threat,),
         (Despair,)
     ),
-	"f": (
-		(Dark,),
+    "f": (
+        (Dark,),
         (Dark,),
         (Dark,),
         (Dark,),
