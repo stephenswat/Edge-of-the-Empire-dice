@@ -41,9 +41,9 @@ class DicePool(object):
         self.dice = re.findall("([A-Za-z])(\d+)?", dice_pool)
 
         for die in self.dice:
-            if not (die[0] in dice.dieOptions.keys() + ["D"]):
+            if not (die[0] in dice.die_options.keys() + ["D"]):
                 raise ValueError("Invalid die type supplied. Valid dice are: " 
-                    + ", ".join(dice.dieOptions.keys() + ["D"]))
+                    + ", ".join(dice.die_options.keys() + ["D"]))
 
     def __add_results(self, results):
         """
@@ -96,7 +96,7 @@ class Die(object):
             return ((self.die_type[0] + self.die_type[1], 
                 random.choice(range(int(self.die_type[1])))),)
         else:
-            return random.choice(dice.dieOptions[self.die_type[0]])
+            return random.choice(dice.die_options[self.die_type[0]])
 
 def roll_string(string):
     """
