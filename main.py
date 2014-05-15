@@ -23,7 +23,7 @@ class DicePool(object):
     """
     Class representing a pool of dice to be rolled by the script. Stores a dict
     representing the current roll. Has a roll() function which (re)rolls all
-    dice in the pool and an internal function __addResults(results) which adds
+    dice in the pool and an internal function __add_results(results) which adds
     a set of results to the value of the current pool. 
     """
 
@@ -37,15 +37,15 @@ class DicePool(object):
         "custom":    []
     }
 
-    def __init__(self, dicePoolString):
-        self.dice = re.findall("([A-Za-z])(\d+)?", dicePoolString)
+    def __init__(self, dice_pool):
+        self.dice = re.findall("([A-Za-z])(\d+)?", dice_pool)
 
         for die in self.dice:
             if not (die[0] in dice.dieOptions.keys() + ["D"]):
                 raise ValueError("Invalid die type supplied. Valid dice are: " 
                     + ", ".join(dice.dieOptions.keys() + ["D"]))
 
-    def __addResults(self, results):
+    def __add_results(self, results):
         """
         Takes a set of results as a dictionary (or tuple for custom dice) and
         adds then to the current value of the dice pool.
@@ -53,12 +53,12 @@ class DicePool(object):
         input: A dictionary of results.
         output: None, but __value is updated.
         """
-        for result in results:
-            if isinstance(result, dict):
-                for key in result.keys():
-                    self.__value[key] += result[key]
-            elif isinstance(result, tuple):
-                self.__value['custom'].append(result)
+        for res in results:
+            if isinstance(res, dict):
+                for key in res.keys():
+                    self.__value[key] += res[key]
+            elif isinstance(res, tuple):
+                self.__value['custom'].append(res)
             else:
                 raise ValueError("Illegal result type.")
 
@@ -72,7 +72,7 @@ class DicePool(object):
         """
         for die in self.dice:
             results = Die(die).roll()
-            self.__addResults(results)
+            self.__add_results(results)
 
         return self.__value
 
@@ -82,8 +82,8 @@ class Die(object):
     is represented as a tuple.
     """
 
-    def __init__(self, dieType):
-        self.dieType = dieType
+    def __init__(self, die_type):
+        self.die_type = die_type
 
     def roll(self):
         """
@@ -92,13 +92,13 @@ class Die(object):
         input: None.
         output: The result of the roll as a dictionary.
         """
-        if self.dieType[0] == "D":
-            return ((self.dieType[0] + self.dieType[1], 
-                random.choice(range(int(self.dieType[1])))),)
+        if self.die_type[0] == "D":
+            return ((self.die_type[0] + self.die_type[1], 
+                random.choice(range(int(self.die_type[1])))),)
         else:
-            return random.choice(dice.dieOptions[self.dieType[0]])
+            return random.choice(dice.dieOptions[self.die_type[0]])
 
-def rollString(string):
+def roll_string(string):
     """
     Creates a dice pool from an input string, rolls it and returns the result.
 
@@ -109,7 +109,7 @@ def rollString(string):
     pool = DicePool(string)
     return pool.roll()
 
-def displayResults(results):
+def display_results(results):
     """
     Prints some human-readable information about the results of a dice roll,
     like if it succeeded, if it generated threat, advantage, triumph, despair,
@@ -138,16 +138,15 @@ def displayResults(results):
         print ("The roll generated %d light and %d dark force points!" 
             % (results['light'], results['dark']))
 
-    for customRoll in results['custom']:
-        print "Your %s-sided die rolled %d." % (customRoll[0][1:], 
-            customRoll[1])
+    for custom_roll in results['custom']:
+        print "Your %s-sided die rolled %d." % (custom_roll[0][1:], 
+            custom_roll[1])
 
 
 if __name__ == "__main__":
     if len(sys.argv) >= 2 and len(sys.argv[1]) > 0:
         try:
-            result = rollString(sys.argv[1])
-            displayResults(result)
+            display_results(roll_string(sys.argv[1]))
         except Exception as e:
             print("Error: " + str(e))
     else:
