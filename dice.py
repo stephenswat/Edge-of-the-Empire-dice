@@ -116,5 +116,6 @@ DIE_OPTIONS = {
         (LIGHT,),
         (LIGHT, LIGHT,),
         (LIGHT, LIGHT,),
-        (LIGHT, LIGHT,))
+        (LIGHT, LIGHT,)
+    )
 }
