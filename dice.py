@@ -1,116 +1,120 @@
-Success = {
+"""
+This file stores all possible rolls on all dice, for easy reference in main.py.
+"""
+
+SUCCESS = {
     "success": 1
 }
 
-Advantage = {
+ADVANTAGE = {
     "advantage": 1
 }
 
-Triumph = {
+TRIUMPH = {
     "success": 1,
     "triumph": 1
 }
 
-Failure = {
+FAILURE = {
     "success": -1
 }
 
-Threat = {
+THREAT = {
     "advantage": -1
 }
 
-Despair = {
+DESPAIR = {
     "success": -1,
     "despair": 1
 }
 
-Dark = {
+DARK = {
     "dark": 1
 }
 
-Light = {
+LIGHT = {
     "light": 1
 }
 
-Blank = {
+BLANK = {
 }
 
-die_options = {
+DIE_OPTIONS = {
     "b": (
-        (Blank,),
-        (Blank,),
-        (Success,),
-        (Advantage,),
-        (Advantage, Advantage,),
-        (Advantage, Success,)
+        (BLANK,),
+        (BLANK,),
+        (SUCCESS,),
+        (ADVANTAGE,),
+        (ADVANTAGE, ADVANTAGE,),
+        (ADVANTAGE, SUCCESS,)
     ),
     "a": (
-        (Blank,),
-        (Advantage, Advantage,),
-        (Success,),
-        (Advantage,),
-        (Success, Success,),
-        (Advantage, Success,),
-        (Advantage,),
-        (Success,)
+        (BLANK,),
+        (ADVANTAGE, ADVANTAGE,),
+        (SUCCESS,),
+        (ADVANTAGE,),
+        (SUCCESS, SUCCESS,),
+        (ADVANTAGE, SUCCESS,),
+        (ADVANTAGE,),
+        (SUCCESS,)
     ),
     "p": (
-        (Blank,),
-        (Success,),
-        (Success,),
-        (Success, Success,),
-        (Success, Success,),
-        (Advantage,),
-        (Advantage, Success,),
-        (Advantage, Success,),
-        (Advantage, Success,),
-        (Advantage, Advantage,),
-        (Advantage, Advantage,),
-        (Triumph,)
+        (BLANK,),
+        (SUCCESS,),
+        (SUCCESS,),
+        (SUCCESS, SUCCESS,),
+        (SUCCESS, SUCCESS,),
+        (ADVANTAGE,),
+        (ADVANTAGE, SUCCESS,),
+        (ADVANTAGE, SUCCESS,),
+        (ADVANTAGE, SUCCESS,),
+        (ADVANTAGE, ADVANTAGE,),
+        (ADVANTAGE, ADVANTAGE,),
+        (TRIUMPH,)
     ),
     "s": (
-        (Blank,),
-        (Blank,),
-        (Failure,),
-        (Failure,),
-        (Threat,),
-        (Threat,)
+        (BLANK,),
+        (BLANK,),
+        (FAILURE,),
+        (FAILURE,),
+        (THREAT,),
+        (THREAT,)
     ),
     "d": (
-        (Blank,),
-        (Threat,),
-        (Threat, Threat,),
-        (Threat,),
-        (Threat,),
-        (Threat,),
-        (Threat, Threat,),
-        (Failure, Threat,)
+        (BLANK,),
+        (THREAT,),
+        (THREAT, THREAT,),
+        (THREAT,),
+        (THREAT,),
+        (THREAT,),
+        (THREAT, THREAT,),
+        (FAILURE, THREAT,)
     ),
     "c": (
-        (Blank,),
-        (Failure,),
-        (Failure,),
-        (Failure, Failure,),
-        (Failure, Failure,),
-        (Threat,),
-        (Threat,),
-        (Failure, Threat,),
-        (Failure, Threat,),
-        (Threat, Threat,),
-        (Threat, Threat,),
-        (Despair,)
+        (BLANK,),
+        (FAILURE,),
+        (FAILURE,),
+        (FAILURE, FAILURE,),
+        (FAILURE, FAILURE,),
+        (THREAT,),
+        (THREAT,),
+        (FAILURE, THREAT,),
+        (FAILURE, THREAT,),
+        (THREAT, THREAT,),
+        (THREAT, THREAT,),
+        (DESPAIR,)
     ),
     "f": (
-        (Dark,),
-        (Dark,),
-        (Dark,),
-        (Dark,),
-        (Dark,),
-        (Dark,),
-        (Dark, Dark,),
-        (Light,),
-        (Light,),
-        (Light, Light,),
-        (Light, Light,),
-        (Light, Light,))
+        (DARK,),
+        (DARK,),
+        (DARK,),
+        (DARK,),
+        (DARK,),
+        (DARK,),
+        (DARK, DARK,),
+        (LIGHT,),
+        (LIGHT,),
+        (LIGHT, LIGHT,),
+        (LIGHT, LIGHT,),
+        (LIGHT, LIGHT,))
 }
