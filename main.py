@@ -27,15 +27,7 @@ class DicePool(object):
     a set of results to the value of the current pool. 
     """
 
-    __value = {
-        "success":   0,
-        "advantage": 0,
-        "triumph":   0,
-        "despair":   0,
-        "dark":      0,
-        "light":     0,
-        "custom":    []
-    }
+    __value = {}
 
     def __init__(self, dice_pool):
         self.dice = re.findall("([A-Za-z])(\d+)?", dice_pool)
@@ -62,6 +54,24 @@ class DicePool(object):
             else:
                 raise ValueError("Illegal result type.")
 
+    def reset_results(self):
+        """
+        Resets the value of __value to all zero.
+
+        input: None.
+        output: None, but resets __value.
+        """
+
+        self.__value = {
+            "success":   0,
+            "advantage": 0,
+            "triumph":   0,
+            "despair":   0,
+            "dark":      0,
+            "light":     0,
+            "custom":    []
+        }
+
     def roll(self):
         """
         Rolls all dice in this pool and adds the results to the value of the
@@ -70,6 +80,9 @@ class DicePool(object):
         input: None.
         output: The value of the dice pool after (re)rolling all dice.
         """
+
+        self.reset_results()
+
         for die in self.dice:
             results = Die(die).roll()
             self.__add_results(results)
