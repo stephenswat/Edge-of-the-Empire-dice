@@ -48,9 +48,10 @@ class DicePool(object):
         for res in results:
             if isinstance(res, dict):
                 for key in res.keys():
-                    self.__value[key] += res[key]
-            elif isinstance(res, tuple):
-                self.__value['custom'].append(res)
+                    if key in self.__value.keys():
+                        self.__value[key] += res[key]
+                    else:
+                        self.__value['custom'].append((key, res[key]))
             else:
                 raise ValueError("Illegal result type.")
 
@@ -106,8 +107,8 @@ class Die(object):
         output: The result of the roll as a dictionary.
         """
         if self.die_type[0] == "D":
-            return ((self.die_type[0] + self.die_type[1], 
-                random.choice(range(int(self.die_type[1])))),)
+            return ({self.die_type[0] + self.die_type[1]: 
+                random.randint(1, int(self.die_type[1]))},)
         else:
             return random.choice(dice.DIE_OPTIONS[self.die_type[0]])
 
