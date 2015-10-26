@@ -16,5 +16,41 @@ __version__    = "0.0.1"
 __email__      = "stephenswat@gmail.com"
 
 
+class Modifier(object):
+    pass
+
+
+class Weapon(object):
+    pass
+
+
+class Actor(object):
+    def take_damage(damage):
+        pass
+
+    def move(target, distance):
+        pass
+
+    def attack(target):
+        pass
+
+    def kill():
+        pass
+
+    def save(file_name):
+        pass
+
+    def add_modifier(modifier):
+        pass
+
+
+class Vehicle(Actor):
+    pass
+
+
+class Infantry(Actor):
+    pass
+
+
 if __name__ == "__main__":
     pass
