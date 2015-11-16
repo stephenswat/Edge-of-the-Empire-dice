@@ -58,11 +58,9 @@ class Encounter(object):
 
 
 class EncounterInterface(object):
-    def __init__(self, encounter=None):
-        if encounter is None:
-            self.encounter = Encounter()
-        else:
-            self.encounter = encounter
+    def __init__(self, **kwargs):
+        self.encounter = kwargs.get('encounter', Encounter(**kwargs))
+
 
 if __name__ == "__main__":
     e = EncounterInterface()
