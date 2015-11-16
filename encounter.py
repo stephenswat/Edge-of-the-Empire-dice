@@ -52,5 +52,17 @@ class Infantry(Actor):
     pass
 
 
+class Encounter(object):
+    def __init__(self):
+        self.actors = []
+
+
+class EncounterInterface(object):
+    def __init__(self, encounter=None):
+        if encounter is None:
+            self.encounter = Encounter()
+        else:
+            self.encounter = encounter
+
 if __name__ == "__main__":
-    pass
+    e = EncounterInterface()
