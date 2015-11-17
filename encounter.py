@@ -125,7 +125,13 @@ class EncounterInterface(object):
 
 
 if __name__ == "__main__":
-    with open('encounters/test.json') as f:
+    import argparse, sys
+    p = argparse.ArgumentParser()
+    p.add_argument('-p', help='number of player characters to enter', metavar='players', default=0, type=int)
+    p.add_argument('file', help='an encounter file to load')
+    args = p.parse_args(sys.argv[1:])
+
+    with open(args.file) as f:
         e = EncounterInterface(json.load(f))
 
     for x in e.encounter.actors:
