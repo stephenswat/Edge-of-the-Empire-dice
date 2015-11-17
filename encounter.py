@@ -18,6 +18,13 @@ __email__      = "stephenswat@gmail.com"
 import json
 import dice
 
+
+class VillainType(object):
+    MINION = 0
+    RIVAL = 1
+    NEMESIS = 2
+    
+
 class Modifier(object):
     pass
 
