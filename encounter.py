@@ -23,7 +23,21 @@ class VillainType(object):
     MINION = 0
     RIVAL = 1
     NEMESIS = 2
-    
+
+    def __init__(self):
+        raise NotImplementedError("this class should not be initialized.")
+
+    @staticmethod
+    def from_string(string):
+        if string.lower() == 'minion':
+            return VillainType.MINION
+        elif string.lower() == 'rival':
+            return VillainType.RIVAL
+        elif string.lower() == 'nemesis':
+            return VillainType.NEMESIS
+        else:
+            raise ValueError("invalid VillainType enum.")
+
 
 class Modifier(object):
     pass
@@ -36,6 +50,10 @@ class Weapon(object):
 class Actor(object):
     def __init__(self, data, player=False):
         self.player = player
+        self.type = VillainType.from_string(data.get('type', 'minion'))
+        self.name = data.get('name', '[UNNAMED ACTOR]')
+        self.soak = data['soak']
+        print data
 
     def take_damage(self, damage):
         pass
