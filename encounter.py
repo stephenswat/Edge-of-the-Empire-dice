@@ -26,8 +26,8 @@ class Weapon(object):
 
 
 class Actor(object):
-    def __init__(self, data):
-        print data
+    def __init__(self, data, player=False):
+        self.player = player
 
     def take_damage(self, damage):
         pass
@@ -38,7 +38,7 @@ class Actor(object):
     def attack(self, target):
         pass
 
-    def kill(self, ):
+    def kill(self):
         pass
 
     def save(self, file_name):
@@ -76,7 +76,10 @@ class EncounterInterface(object):
 
         assert(type(data) == dict), "type of encounter data must be a dict."
         self.encounter.add_actor([Actor(x) for x in data['npcs']])
+        self.encounter.add_actor([Actor([], player=True) for _ in range(int(data['players']))])
 
 if __name__ == "__main__":
     with open('encounters/test.json') as f:
         e = EncounterInterface(json.load(f))
+
+    print e.encounter.actors
