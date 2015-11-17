@@ -15,6 +15,7 @@ __license__    = "Unlicense"
 __version__    = "0.0.1"
 __email__      = "stephenswat@gmail.com"
 
+import json
 
 class Modifier(object):
     pass
@@ -25,6 +26,9 @@ class Weapon(object):
 
 
 class Actor(object):
+    def __init__(self, data):
+        print data
+
     def take_damage(damage):
         pass
 
@@ -56,11 +60,23 @@ class Encounter(object):
     def __init__(self):
         self.actors = []
 
+    def add_actor(self, actor):
+        if type(actor) == Actor:
+            self.actors.append(actor)
+        elif type(actor) == list:
+            assert(all(type(x) == Actor for x in actor))
+            self.actors += actor
+        else:
+            raise ValueError("add_actor takes either an Actor or a list.")
+
 
 class EncounterInterface(object):
-    def __init__(self, **kwargs):
+    def __init__(self, data, **kwargs):
         self.encounter = kwargs.get('encounter', Encounter(**kwargs))
 
+        assert(type(data) == dict), "type of encounter data must be a dict."
+        self.encounter.add_actor([Actor(x) for x in data['npcs']])
 
 if __name__ == "__main__":
-    e = EncounterInterface()
+    with open('encounters/test.json') as f:
+        e = EncounterInterface(json.load(f))
