@@ -16,6 +16,7 @@ __version__    = "0.0.1"
 __email__      = "stephenswat@gmail.com"
 
 import json
+import dice
 
 class Modifier(object):
     pass
@@ -46,6 +47,12 @@ class Actor(object):
 
     def add_modifier(self, modifier):
         pass
+
+    def roll_initiative(self):
+        self.set_initiative(0, 0)
+
+    def set_initiative(self, success, advantage):
+        self.initiative = (success, advantage)
 
 
 class Vehicle(Actor):
@@ -78,8 +85,24 @@ class EncounterInterface(object):
         self.encounter.add_actor([Actor(x) for x in data['npcs']])
         self.encounter.add_actor([Actor([], player=True) for _ in range(int(data['players']))])
 
+        self.determine_initiative()
+
+    def determine_initiative(self):
+        for actor in self.encounter.actors:
+            if actor.player:
+                actor.set_initiative(*self.query_initiative())
+            else:
+                actor.roll_initiative()
+
+    @staticmethod
+    def query_initiative():
+        return (int(x) for x in raw_input("Enter initiative as <success>,<advantage>\n > ").split(','))
+
+
 if __name__ == "__main__":
     with open('encounters/test.json') as f:
         e = EncounterInterface(json.load(f))
 
-    print e.encounter.actors
+    for x in e.encounter.actors:
+        print x
+        print x.initiative
