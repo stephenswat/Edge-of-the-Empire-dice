@@ -29,22 +29,22 @@ class Actor(object):
     def __init__(self, data):
         print data
 
-    def take_damage(damage):
+    def take_damage(self, damage):
         pass
 
-    def move(target, distance):
+    def move(self, target, distance):
         pass
 
-    def attack(target):
+    def attack(self, target):
         pass
 
-    def kill():
+    def kill(self, ):
         pass
 
-    def save(file_name):
+    def save(self, file_name):
         pass
 
-    def add_modifier(modifier):
+    def add_modifier(self, modifier):
         pass
 
 
