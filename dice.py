@@ -33,9 +33,9 @@ class DicePool(object):
         self.dice = re.findall("([A-Za-z])(\d+)?", dice_pool)
 
         for die in self.dice:
-            if not (die[0] in dice_values.DIE_OPTIONS.keys() + ["D"]):
+            if not (die[0] in list(dice_values.DIE_OPTIONS.keys()) + ["D"]):
                 raise ValueError("Invalid die type supplied. Valid dice are: "
-                    + ", ".join(dice_values.DIE_OPTIONS.keys() + ["D"]))
+                    + ", ".join(list(dice_values.DIE_OPTIONS.keys()) + ["D"]))
 
     def __add_results(self, results):
         """
