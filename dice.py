@@ -144,17 +144,17 @@ def display_results(results):
             else ("The roll generated %d advantage!" % results['advantage'])))
 
     if results['despair'] > 0:
-        print "The roll generated %d despair.." % results['despair']
+        print("The roll generated %d despair.." % results['despair'])
     if results['triumph'] > 0:
-        print "The roll generated %d triumph!" % results['triumph']
+        print("The roll generated %d triumph!" % results['triumph'])
 
     if results['light'] > 0 or results['dark'] > 0:
         print ("The roll generated %d light and %d dark force points!"
             % (results['light'], results['dark']))
 
     for custom_roll in results['custom']:
-        print "Your %s-sided die rolled %d." % (custom_roll[0][1:],
-            custom_roll[1])
+        print("Your %s-sided die rolled %d." % (custom_roll[0][1:],
+            custom_roll[1]))
 
 
 if __name__ == "__main__":

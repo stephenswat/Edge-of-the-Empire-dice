@@ -53,7 +53,7 @@ class Actor(object):
         self.type = VillainType.from_string(data.get('type', 'minion'))
         self.name = data.get('name', '[UNNAMED ACTOR]')
         self.soak = data['soak']
-        print data
+        print(data)
 
     def take_damage(self, damage):
         pass
@@ -129,5 +129,5 @@ if __name__ == "__main__":
         e = EncounterInterface(json.load(f))
 
     for x in e.encounter.actors:
-        print x
-        print x.initiative
+        print(x)
+        print(x.initiative)
