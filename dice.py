@@ -88,7 +88,13 @@ class DicePool(object):
             results = Die(die).roll()
             self.__add_results(results)
 
-        return self.__value
+    def get_values(self):
+        rv = self.__value.copy()
+
+        rv['failure'] = -rv['success']
+        rv['threat'] = -rv['advantage']
+
+        return rv
 
 class Die(object):
     """
@@ -121,7 +127,8 @@ def roll_string(string):
     """
 
     pool = DicePool(string)
-    return pool.roll()
+    pool.roll()
+    return pool.get_values()
 
 def display_results(results):
     """
@@ -133,24 +140,24 @@ def display_results(results):
     output: Some printed information about the roll.
     """
 
-    print ("The roll failed with %d failure." % abs(results['success'])
-        if results['success'] <= 0
-        else "The roll succeeded with %d success!" % results['success'])
+    if results['success'] < 1:
+        print("The roll failed with {failure} failure.".format(**results))
+    else:
+        print("The roll succeeded with {success} success!".format(**results))
 
-    print ("The roll gained neither threat nor advantage."
-        if results['advantage'] == 0
-        else (("The roll generated %d threat." % abs(results['advantage']))
-            if (results['advantage'] <= 0)
-            else ("The roll generated %d advantage!" % results['advantage'])))
+    if results['advantage'] > 0:
+        print("The roll generated {advantage} advantage!".format(**results))
+    elif results['advantage'] < 0:
+        print("The roll generated {threat} threat!".format(**results))
 
     if results['despair'] > 0:
-        print("The roll generated %d despair.." % results['despair'])
+        print("The roll generated {despair} despair..".format(**results))
     if results['triumph'] > 0:
-        print("The roll generated %d triumph!" % results['triumph'])
+        print("The roll generated {triumph} triumph!".format(**results))
 
     if results['light'] > 0 or results['dark'] > 0:
-        print ("The roll generated %d light and %d dark force points!"
-            % (results['light'], results['dark']))
+        print ("The roll generated {light} light and {dark} dark force points!"
+               .format(**results))
 
     for custom_roll in results['custom']:
         print("Your %s-sided die rolled %d." % (custom_roll[0][1:],
