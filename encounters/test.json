@@ -1,0 +1,64 @@
+{
+    "npcs": [
+        {
+            "name": "Baron Schitzelhausen",
+            "type": "nemesis",
+            "attributes": {
+                "brawn": 2,
+                "agility": 2,
+                "intellect": 3,
+                "cunning": 3,
+                "willpower": 2,
+                "presence": 4
+            },
+            "soak": 3,
+            "wthres": 18,
+            "sthres": 13,
+            "defense": [1, 1],
+            "skills": {
+                "astrogation": 3,
+                "charm": 2,
+                "cool": 3,
+                "gunnery": 3,
+                "knowledge_underworld": 3,
+                "ranged_light": 3,
+                "piloting_planetary": 3,
+                "piloting_space": 4,
+                "skullduggery": 2,
+                "streetwise": 4,
+                "vigilance": 2
+            },
+            "talents": {
+                "adversary": 1,
+                "master_pilot": 0,
+                "skilled_jockey": 2
+            },
+            "abilities": [],
+            "equipment": []
+        },
+        {
+            "name": "Group of guards",
+            "type": "minion",
+            "attributes": {
+                "brawn": 2,
+                "agility": 2,
+                "intellect": 1,
+                "cunning": 1,
+                "willpower": 1,
+                "presence": 1
+            },
+            "soak": 4,
+            "wthres": 12,
+            "defense": [0, 0],
+            "skills": {},
+            "talents": {
+                "adversary": 1,
+                "master_pilot": 0,
+                "skilled_jockey": 2
+            },
+            "abilities": [],
+            "equipment": []
+        }
+    ],
+    "players": 0
+}
