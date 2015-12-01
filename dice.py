@@ -30,7 +30,7 @@ class DicePool(object):
     __value = {}
 
     def __init__(self, dice_pool):
-        self.dice = re.findall("([A-Za-z])(\d+)?", dice_pool)
+        self.dice = re.findall(r"([A-Za-z])(\d+)?", dice_pool)
 
         for die in self.dice:
             if not (die[0] in list(dice_values.DIE_OPTIONS.keys()) + ["D"]):
@@ -168,7 +168,7 @@ if __name__ == "__main__":
     if len(sys.argv) >= 2 and len(sys.argv[1]) > 0:
         try:
             display_results(roll_string(sys.argv[1]))
-        except Exception as e:
-            print("Error: " + str(e))
+        except Exception as error:
+            print("Error: " + str(error))
     else:
         print("Error: Please supply a dice pool as an argument")

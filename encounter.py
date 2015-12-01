@@ -9,11 +9,11 @@ Credits go to them for developing the dice system. Apart from that, I don't
 know anything about copyrighting, so please FFG, don't sue me.
 """
 
-__author__     = "Stephen Swatman"
-__credits__    = ["Fantasy Flight Games"]
-__license__    = "Unlicense"
-__version__    = "0.0.1"
-__email__      = "stephenswat@gmail.com"
+__author__ = "Stephen Swatman"
+__credits__ = ["Fantasy Flight Games"]
+__license__ = "Unlicense"
+__version__ = "0.0.1"
+__email__ = "stephenswat@gmail.com"
 
 import json
 import dice
@@ -38,6 +38,7 @@ class Actor(object):
         self.type = Actor.type_from_string(data.get('type', 'minion'))
         self.name = data.get('name', '[UNNAMED ACTOR]')
         self.soak = data['soak']
+        self.skills = data.get('skills', {})
 
     def take_damage(self, damage):
         pass
@@ -57,8 +58,16 @@ class Actor(object):
     def add_modifier(self, modifier):
         pass
 
-    def roll_initiative(self):
-        self.set_initiative(0, 0)
+    def roll_initiative(self, init_type=0):
+        if init_type == Encounter.VIGILANCE:
+            values = [self.skills.get('vigilance', 0), self.attributes['willpower']]
+        elif init_type == Encounter.VIGILANCE:
+            values = [self.skills.get('cool', 0), self.attributes['presence']]
+
+        values.sort(reverse=True)
+        roll = dice.DicePool('%ia%ip' % (values[0] - values[1], values[1])).roll()
+
+        self.set_initiative(roll['success'], roll['advantage'])
 
     def set_initiative(self, success, advantage):
         self.initiative = (success, advantage)
@@ -84,14 +93,17 @@ class Infantry(Actor):
 
 
 class Encounter(object):
+    VIGILANCE = 0
+    COOL = 1
+
     def __init__(self):
         self.actors = []
 
     def add_actor(self, actor):
-        if type(actor) == Actor:
+        if isinstance(actor, Actor):
             self.actors.append(actor)
         elif type(actor) == list:
-            assert(all(type(x) == Actor for x in actor))
+            assert all(type(x) == Actor for x in actor)
             self.actors += actor
         else:
             raise ValueError("add_actor takes either an Actor or a list.")
@@ -106,6 +118,7 @@ class EncounterInterface(object):
         self.encounter.add_actor([Actor([], player=True) for _ in range(int(data['players']))])
 
         self.determine_initiative()
+        self.sort_initiative()
 
     def determine_initiative(self):
         for actor in self.encounter.actors:
