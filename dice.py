@@ -8,11 +8,11 @@ Credits go to them for developing the dice system. Apart from that, I don't
 know anything about copyrighting, so please FFG, don't sue me.
 """
 
-__author__     = "Stephen Swatman"
-__credits__    = ["Fantasy Flight Games"]
-__license__    = "Unlicense"
-__version__    = "0.0.1"
-__email__      = "stephenswat@gmail.com"
+__author__ = "Stephen Swatman"
+__credits__ = ["Fantasy Flight Games"]
+__license__ = "Unlicense"
+__version__ = "0.0.1"
+__email__ = "stephenswat@gmail.com"
 
 import random
 import sys
@@ -33,9 +33,9 @@ class DicePool(object):
         self.dice = re.findall(r"([A-Za-z])(\d+)?", dice_pool)
 
         for die in self.dice:
-            if not (die[0] in list(dice_values.DIE_OPTIONS.keys()) + ["D"]):
+            if not die[0] in list(dice_values.DIE_OPTIONS.keys()) + ["D"]:
                 raise ValueError("Invalid die type supplied. Valid dice are: "
-                    + ", ".join(list(dice_values.DIE_OPTIONS.keys()) + ["D"]))
+                                 + ", ".join(list(dice_values.DIE_OPTIONS.keys()) + ["D"]))
 
     def __add_results(self, results):
         """
@@ -79,7 +79,7 @@ class DicePool(object):
         dice pool.
 
         input: None.
-        output: The value of the dice pool after (re)rolling all dice.
+        output: None.
         """
 
         self.reset_results()
@@ -89,12 +89,19 @@ class DicePool(object):
             self.__add_results(results)
 
     def get_values(self):
-        rv = self.__value.copy()
+        """
+        Returns a complete list of dice pool values, including failure and
+        threat.
 
-        rv['failure'] = -rv['success']
-        rv['threat'] = -rv['advantage']
+        input: None.
+        output: The value of the dice pool after (re)rolling all dice.
+        """
+        values = self.__value.copy()
 
-        return rv
+        values['failure'] = -values['success']
+        values['threat'] = -values['advantage']
+
+        return values
 
 class Die(object):
     """
@@ -114,7 +121,7 @@ class Die(object):
         """
         if self.die_type[0] == "D":
             return ({self.die_type[0] + self.die_type[1]:
-                random.randint(1, int(self.die_type[1]))},)
+                     random.randint(1, int(self.die_type[1]))},)
         else:
             return random.choice(dice_values.DIE_OPTIONS[self.die_type[0]])
 
@@ -156,19 +163,16 @@ def display_results(results):
         print("The roll generated {triumph} triumph!".format(**results))
 
     if results['light'] > 0 or results['dark'] > 0:
-        print ("The roll generated {light} light and {dark} dark force points!"
-               .format(**results))
+        print("The roll generated {light} light and {dark} dark force points!"
+              .format(**results))
 
     for custom_roll in results['custom']:
         print("Your %s-sided die rolled %d." % (custom_roll[0][1:],
-            custom_roll[1]))
+                                                custom_roll[1]))
 
 
 if __name__ == "__main__":
     if len(sys.argv) >= 2 and len(sys.argv[1]) > 0:
-        try:
-            display_results(roll_string(sys.argv[1]))
-        except Exception as error:
-            print("Error: " + str(error))
+        display_results(roll_string(sys.argv[1]))
     else:
         print("Error: Please supply a dice pool as an argument")

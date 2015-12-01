@@ -15,6 +15,7 @@ __license__ = "Unlicense"
 __version__ = "0.0.1"
 __email__ = "stephenswat@gmail.com"
 
+
 import json
 import dice
 
@@ -39,6 +40,7 @@ class Actor(object):
         self.name = data.get('name', '[UNNAMED ACTOR]')
         self.soak = data['soak']
         self.skills = data.get('skills', {})
+        self.initiative = None
 
     def take_damage(self, damage):
         pass
@@ -102,8 +104,8 @@ class Encounter(object):
     def add_actor(self, actor):
         if isinstance(actor, Actor):
             self.actors.append(actor)
-        elif type(actor) == list:
-            assert all(type(x) == Actor for x in actor)
+        elif isinstance(actor, list):
+            assert all(isinstance(x, Actor) for x in actor)
             self.actors += actor
         else:
             raise ValueError("add_actor takes either an Actor or a list.")
@@ -113,12 +115,15 @@ class EncounterInterface(object):
     def __init__(self, data, **kwargs):
         self.encounter = kwargs.get('encounter', Encounter(**kwargs))
 
-        assert(type(data) == dict), "type of encounter data must be a dict."
+        assert isinstance(data, dict), "type of encounter data must be a dict."
         self.encounter.add_actor([Actor(x) for x in data['npcs']])
         self.encounter.add_actor([Actor([], player=True) for _ in range(int(data['players']))])
 
         self.determine_initiative()
         self.sort_initiative()
+
+    def sort_initiative(self):
+        pass
 
     def determine_initiative(self):
         for actor in self.encounter.actors:
@@ -129,19 +134,20 @@ class EncounterInterface(object):
 
     @staticmethod
     def query_initiative():
-        return (int(x) for x in raw_input("Enter initiative as <success>,<advantage>\n > ").split(','))
+        return (int(x) for x in input("Enter initiative as <success>,<advantage>\n > ").split(','))
 
 
 if __name__ == "__main__":
     import argparse, sys
-    p = argparse.ArgumentParser()
-    p.add_argument('-p', help='number of player characters to enter', metavar='players', default=0, type=int)
-    p.add_argument('file', help='an encounter file to load')
-    args = p.parse_args(sys.argv[1:])
+    PARSER = argparse.ArgumentParser()
+    PARSER.add_argument('-p', help='number of player characters to enter',
+                        metavar='players', default=0, type=int)
+    PARSER.add_argument('file', help='an encounter file to load')
+    ARGS = PARSER.parse_args(sys.argv[1:])
 
-    with open(args.file) as f:
-        e = EncounterInterface(json.load(f))
+    with open(ARGS.file) as f:
+        ENCOUNTER = EncounterInterface(json.load(f))
 
-    for x in e.encounter.actors:
+    for x in ENCOUNTER.encounter.actors:
         print(x)
         print(x.initiative)
