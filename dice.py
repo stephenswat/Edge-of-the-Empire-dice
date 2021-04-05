@@ -44,8 +44,7 @@ class DicePool(object):
 
         for die in self.dice:
             if not die[0] in list(dice_values.DIE_OPTIONS.keys()) + ["D"]:
-                raise ValueError("Invalid die type supplied. Valid dice are: "
-                                 + ", ".join(list(dice_values.DIE_OPTIONS.keys()) + ["D"]))
+                raise ValueError("Invalid die type supplied. Valid dice are: " + ", ".join(list(dice_values.DIE_OPTIONS.keys()) + ["D"]))
 
     def __add_results(self, results):
         """
@@ -130,8 +129,7 @@ class Die(object):
         output: The result of the roll as a dictionary.
         """
         if self.die_type[0] == "D":
-            return ({self.die_type[0] + self.die_type[1]:
-                     random.randint(1, int(self.die_type[1]))},)
+            return ({self.die_type[0] + self.die_type[1]:random.randint(1, int(self.die_type[1]))},)
         else:
             return random.choice(dice_values.DIE_OPTIONS[self.die_type[0]])
 
@@ -179,13 +177,10 @@ def display_results(results):
         print("The roll generated {triumph} triumph!".format(**results))
 
     if results['light'] > 0 or results['dark'] > 0:
-        print("The roll generated {light} light and {dark} dark force points!"
-              .format(**results))
+        print("The roll generated {light} light and {dark} dark force points!".format(**results))
 
     for custom_roll in results['custom']:
-        print("Your %s-sided die rolled %d." % (custom_roll[0][1:],
-                                                custom_roll[1]))
-
+        print("Your %s-sided die rolled %d." % (custom_roll[0][1:], custom_roll[1]))
 
 if __name__ == "__main__":
     if len(sys.argv) == 2 and len(sys.argv[1]) > 0:
