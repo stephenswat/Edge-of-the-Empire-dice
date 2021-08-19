@@ -12,7 +12,7 @@ This dice roller can either be used as a stand-alone dice rolling application in
 
 To roll dice from the command line, invoke the Python as follows:
 
-	python main.py [pool]
+	python dice.py [pool]
 
 Here, pool is a string representing the dice you want to roll. Each letter represents one die, as follows:
 
@@ -25,11 +25,21 @@ Here, pool is a string representing the dice you want to roll. Each letter repre
 	f = Force die
 	D = Standard die
 
+As well, when rolling, you can select a difficulty level (a predetermined number of difficulty dice) as well as upgrading X number difficulty dice to Challenge dice (or adding additional difficulty dice, should there not be enough)
+
+	Simple = -
+    Easy = d
+    Average = dd
+    Hard = ddd
+    Daunting = dddd
+    Formidable = ddddd
+
 To roll a standard n-sided die, use D followed by a number, like D20 to roll a 20-sided die.
 
-Finally, to roll 2 ability dice, 1 boost die, 1 difficulty die, 1 challenge die and a D12, use the following:
+Finally, to roll 2 ability dice, 1 boost die, and a D12 at Easy difficulty upgraded twice, you could use either of the following:
 
-	python main.py aabdcD12
+	python dice.py aabdcD12
+	python dice.py aabD12 easy 2
 
 Which might output the following:
 

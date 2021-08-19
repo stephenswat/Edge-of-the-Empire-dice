@@ -19,6 +19,16 @@ import sys
 import dice_values
 import re
 
+### Difficulty Levels ###
+DIFFICULTY = {
+    "simple": (),
+    "easy": ("d"),
+    "average": ("dd"),
+    "hard": ("ddd"),
+    "daunting": ("dddd"),
+    "formidable": ("ddddd"),
+}
+
 class DicePool(object):
     """
     Class representing a pool of dice to be rolled by the script. Stores a dict
@@ -34,8 +44,7 @@ class DicePool(object):
 
         for die in self.dice:
             if not die[0] in list(dice_values.DIE_OPTIONS.keys()) + ["D"]:
-                raise ValueError("Invalid die type supplied. Valid dice are: "
-                                 + ", ".join(list(dice_values.DIE_OPTIONS.keys()) + ["D"]))
+                raise ValueError("Invalid die type supplied. Valid dice are: " + ", ".join(list(dice_values.DIE_OPTIONS.keys()) + ["D"]))
 
     def __add_results(self, results):
         """
@@ -120,20 +129,25 @@ class Die(object):
         output: The result of the roll as a dictionary.
         """
         if self.die_type[0] == "D":
-            return ({self.die_type[0] + self.die_type[1]:
-                     random.randint(1, int(self.die_type[1]))},)
+            return ({self.die_type[0] + self.die_type[1]:random.randint(1, int(self.die_type[1]))},)
         else:
             return random.choice(dice_values.DIE_OPTIONS[self.die_type[0]])
 
-def roll_string(string):
+def roll_string(pool, diff_pool="simple", upgrades=0):
     """
     Creates a dice pool from an input string, rolls it and returns the result.
 
     input: A string representing a dice pool.
     output: The result of the dice pool when rolled.
     """
-
-    pool = DicePool(string)
+    diff_pool = DIFFICULTY[diff_pool.lower()]
+    upgrades = int(upgrades)
+    if upgrades > len(diff_pool):
+        diff_pool = "c"*len(diff_pool) + "d"*(upgrades - len(diff_pool))
+    else:
+        diff_pool = "c"*upgrades + "d"*(len(diff_pool) - upgrades)
+    
+    pool = DicePool(pool + diff_pool)
     pool.roll()
     return pool.get_values()
 
@@ -163,16 +177,17 @@ def display_results(results):
         print("The roll generated {triumph} triumph!".format(**results))
 
     if results['light'] > 0 or results['dark'] > 0:
-        print("The roll generated {light} light and {dark} dark force points!"
-              .format(**results))
+        print("The roll generated {light} light and {dark} dark force points!".format(**results))
 
     for custom_roll in results['custom']:
-        print("Your %s-sided die rolled %d." % (custom_roll[0][1:],
-                                                custom_roll[1]))
-
+        print("Your %s-sided die rolled %d." % (custom_roll[0][1:], custom_roll[1]))
 
 if __name__ == "__main__":
-    if len(sys.argv) >= 2 and len(sys.argv[1]) > 0:
+    if len(sys.argv) == 2 and len(sys.argv[1]) > 0:
         display_results(roll_string(sys.argv[1]))
+    elif len(sys.argv) == 3 and len(sys.argv[1]) > 0:
+        display_results(roll_string(sys.argv[1], sys.argv[2]))
+    elif len(sys.argv) == 4 and len(sys.argv[1]) > 0:
+        display_results(roll_string(sys.argv[1], sys.argv[2], sys.argv[3]))
     else:
-        print("Error: Please supply a dice pool as an argument")
+        print("Please check your input, and confirm you are using proper arguments")
